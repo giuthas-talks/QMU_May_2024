@@ -1,0 +1,102 @@
+\documentclass[12pt,a4,english,finnish,pdflatex%,handout
+]{beamer}
+\definecolor{MyGreen}{RGB}{50, 120, 50}
+\usecolortheme[named=MyGreen]{structure}
+
+\usepackage{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb} 
+\usepackage{animate}
+\usepackage{multimedia}
+
+\usepackage{natbib}
+\bibpunct[: ]{(}{)}{,}{}{}{;}
+
+\usepackage{tikz}
+
+\usepackage{tipa}
+
+\usepackage{hyperref}
+
+\setbeamertemplate{navigation symbols}{}
+
+\graphicspath{{figures/}}
+
+\setlength{\leftmargini}{0pt}
+\setlength{\leftmarginii}{1em}
+
+\newcommand{\kommentti}[1]{
+  {\bf[#1]}
+}
+
+
+
+\begin{document}
+\title{Analysing Image Sequences and Other Articulatory Data\\
+Using Vector Norms and Related Methods 
+  \\~\\
+  \kommentti{This is a template}
+}
+\author{Pertti Palo} 
+\date{9 Oct 2023} 
+
+\frame{\titlepage
+  \centering
+} 
+
+\frame{\frametitle{Outline}
+  \begin{itemize}
+    \item This talk starts with a short intro on how I got started with Pixel
+    Difference or using vector norms to analyse overall change in ultrasound
+    (and other) video sequences. It all began with needing to find a quick way
+    of identifying articulatory onsets in ultrasound recordings of a delayed
+    naming experiment (specifically one using the Rastle instructions -- see
+    Rastle et al. 2005). The first version of Pixel Difference was simply
+    Euclidean distance.
+    \item I will then talk about what we can and cannot do with these methods in
+    time domain analysis of articulatory data these days. I will take short side
+    trips to look at similar methods applied to other articulatory data. We have
+    looked at tongue splines and lip videos and I will discuss what kind of
+    challenges and understanding has resulted from those attempts. Finally,
+    analysing 3D/4D ultrasound has been a recent major focus, but unfortunately
+    frame rate issues are not so easy to solve.
+    \item I will finish the talk by discussing why MRI would be very interesting
+    to analyse with these methods -- or adapted versions of them -- and which
+    definite and possible challenges one might come across. .
+  \item stuff
+  \end{itemize}
+}
+
+
+\frame{\frametitle{Introduction: The why}
+  \begin{itemize}
+  \item Pre-speech articulation is interesting from several points of view, but
+  analysing ultrasound videos manually is not great \citep{Palo-MeasuringPrespeechArticulation-2019}.
+  \item stuff
+  \end{itemize}
+}
+
+
+\frame{\frametitle{References}
+  
+\bibliographystyle{apalike}
+\bibliography{science_combined.bib}
+
+}
+
+\frame{
+  \centering
+  {
+    \bf \Large 
+    \usebeamercolor[fg]{title}
+    Something else i.e. section title
+    
+    \vfill
+%    \includegraphics[height=1.5cm]{figures/aalto_logo} 
+  }
+}
+
+
+\end{document}
+
