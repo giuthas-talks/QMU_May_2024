@@ -30,15 +30,10 @@
   {\bf[#1]}
 }
 
-
+\author{Pertti Palo} 
 
 \begin{document}
-\title{Analysing Image Sequences and Other Articulatory Data\\
-Using Vector Norms and Related Methods 
-  \\~\\
-  \kommentti{This is a template}
-}
-\author{Pertti Palo} 
+\title{Analysing Articulatory Data with Vector Norms and Related Methods}
 \date{9 Oct 2023} 
 
 \frame{\titlepage
@@ -47,13 +42,6 @@ Using Vector Norms and Related Methods
 
 \frame{\frametitle{Outline}
   \begin{itemize}
-    \item This talk starts with a short intro on how I got started with Pixel
-    Difference or using vector norms to analyse overall change in ultrasound
-    (and other) video sequences. It all began with needing to find a quick way
-    of identifying articulatory onsets in ultrasound recordings of a delayed
-    naming experiment (specifically one using the Rastle instructions -- see
-    Rastle et al. 2005). The first version of Pixel Difference was simply
-    Euclidean distance.
     \item I will then talk about what we can and cannot do with these methods in
     time domain analysis of articulatory data these days. I will take short side
     trips to look at similar methods applied to other articulatory data. We have
@@ -63,8 +51,7 @@ Using Vector Norms and Related Methods
     frame rate issues are not so easy to solve.
     \item I will finish the talk by discussing why MRI would be very interesting
     to analyse with these methods -- or adapted versions of them -- and which
-    definite and possible challenges one might come across. .
-  \item stuff
+    definite and possible challenges one might come across.
   \end{itemize}
 }
 
@@ -72,8 +59,26 @@ Using Vector Norms and Related Methods
 \frame{\frametitle{Introduction: The why}
   \begin{itemize}
   \item Pre-speech articulation is interesting from several points of view, but
-  analysing ultrasound videos manually is not great \citep{Palo-MeasuringPrespeechArticulation-2019}.
-  \item stuff
+  analysing ultrasound videos manually is not great.
+  \item In my thesis I concentrated on timing of utterance onset in both
+  acoustics and articulation \citep{Palo-MeasuringPrespeechArticulation-2019}.
+  \item The data was high-speed tongue ultrasound from a delayed naming
+  experiment -- specifically one using the Rastle instructions, see
+  \cite{RastleEtAl-CharacterizingMotorExecution-2005}.
+  \end{itemize} 
+
+  % TODO: add a picture of ultrasound here and Rastle timeline
+  % \includegraphics[options]{name}
+}
+
+
+\frame{\frametitle{Introduction: The why}
+  \begin{itemize}
+  \item When trying to identify movement onset in grayscale videos with a lot of
+  speckle 'noise', it doesn't take long to grow a desire for an easier way.
+  \item \kommentti{explain speckle noise and tongue ultrasound}
+  \item The first tool out of the box happened to work adequately --  and so for my
+  thesis I used Euclidean distance to identify articulatory
   \end{itemize}
 }
 
