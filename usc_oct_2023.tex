@@ -45,21 +45,23 @@
 
 \frame{\frametitle{Outline}
   \begin{itemize}
-    \item I will then talk about what we can and cannot do with these methods in
-    time domain analysis of articulatory data these days. I will take short side
-    trips to look at similar methods applied to other articulatory data. We have
-    looked at tongue splines and lip videos and I will discuss what kind of
-    challenges and understanding has resulted from those attempts. Finally,
-    analysing 3D/4D ultrasound has been a recent major focus, but unfortunately
-    frame rate issues are not so easy to solve.
-    \item I will finish the talk by discussing why MRI would be very interesting
-    to analyse with these methods -- or adapted versions of them -- and which
-    definite and possible challenges one might come across.
+    \item Introduction
+    \item Ultrasound tongue imaging
+    \item Pixel Difference (PD)
+    \item PD and other methods applied
+	\begin{itemize}
+	    \item PD on de-interlaced lip videos
+	    \item Metrics on tongue splines
+	    \item PD on 3D/4D ultrasound
+	    \item PD on Raw vs Interpolated 2D data
+	    \item Choosing the norm or metric for PD
+	\end{itemize}
+    \item MRI
   \end{itemize}
 }
 
 
-\frame{\frametitle{Introduction: The why}
+\frame{\frametitle{Introduction}
   \begin{itemize}
   \item Pre-speech articulation is interesting from several points of view, but
   analysing ultrasound videos manually is not great.
@@ -68,7 +70,6 @@
   \item The data was high-speed tongue ultrasound from a delayed naming
   experiment -- specifically one using the Rastle instructions
   \citep{RastleEtAl-CharacterizingMotorExecution-2005}.
-  \item 2D ultrasound has good time resolution: 80-120 fps in today's examples.
   \end{itemize} 
 
  	\centering
@@ -76,7 +77,7 @@
 }
 
 
-\frame{\frametitle{Introduction: The why}
+\frame{\frametitle{Introduction}
   \begin{itemize}
   \item When trying to identify movement onset in greyscale videos with a lot of
   speckle 'noise', it doesn't take long to grow a desire for an easier way.
@@ -88,17 +89,40 @@
   
 }
 
-\frame{\frametitle{What is being imaged by tongue ultrasound?}
+\frame{\frametitle{Ultrasound tongue imaging: What is imaged?}
 	\centering
 	\includegraphics[width=0.45\linewidth]{figures/DA_and_P1_overlay_2}
 	\includegraphics[width=0.45\linewidth]{figures/DA_and_P1_overlay_3}
 }
 
-\frame{\frametitle{Where is the tongue?}
+\frame{\frametitle{Ultrasound tongue imaging: Extracting a spline}
 
 	\centering
 	\hspace*{-.75cm}
 	\includegraphics[width=1.125\linewidth]{P2_lemon_1st_frame_spline.pdf}
+}
+
+\frame{\frametitle{Ultrasound tongue imaging: parameters}
+
+\begin{itemize}
+	\item 2D ultrasound has good time resolution: 80-120 fps in today's examples.
+	\item Usually, 2D ultrasound is used in the mid-sagittal plane.
+	\item 3D/4D ultrasound can image the tongue as a volumetric object, but at
+	the cost of lower frame rates: typically about 20 fps.
+	\item Both have fairly good -- but slightly complex -- spatial resolution.
+\end{itemize}
+}
+
+\frame{
+  \centering
+  {
+    \bf \Large 
+    \usebeamercolor[fg]{title}
+    The main method
+    
+    \vfill
+%    \includegraphics[height=1.5cm]{figures/aalto_logo} 
+  }
 }
 
 
@@ -106,77 +130,101 @@
 \frame{\frametitle{Pixel Difference (PD)}
 	\begin{itemize}
 	\item The first tool out of the box happened to work adequately --  and so for my
-	thesis I used Euclidean distance or $l2$-norm to identify articulatory onsets:
+	thesis I used Euclidean distance or $l2$-norm to identify articulatory onsets.
 	\end{itemize}
-	\begin{equation*}
-		l2(t+0.5) = \sqrt{\sum_{i, j} (x(i,j,t+1) - x(i,j,t))²}
-	\end{equation*}
 
 
 	\centering
-	\includegraphics[height=.5\textheight]{figures/pd_caught.jpg}
+	\includegraphics[height=.7\textheight]{figures/pd_caught.jpg}
 }
 
-\frame{\frametitle{Background of PD}
+\frame{\frametitle{Pixel Difference (PD): Background}
 	\begin{itemize}
 		\item The analysis methods presented here are similar to methods
 		developed by
 		\begin{itemize}
-			\item \cite{McMillanCorley-CascadingInfluencesProduction-2010,DrakeEtAl-ARTICULATORYEVIDENCEINVOLVEMENT-2013} who used Euclidean
-			 distance on ultrasound frames and
-			\item \cite{RaeesyEtAl-ParametrisingDegreeArticulator-2011} who used a similar method on MRI
-			 data.
+			\item
+			 \cite{McMillanCorley-CascadingInfluencesProduction-2010} and
+			 \cite{DrakeEtAl-ARTICULATORYEVIDENCEINVOLVEMENT-2013} who used
+			 Euclidean distance on ultrasound frames and
+			\item \cite{RaeesyEtAl-ParametrisingDegreeArticulator-2011} who
+			 used a similar method on MRI data.
 		\end{itemize}
-	\end{itemize}
+		\item The way I have used it, it is actually just the Pythagorean
+			theorem applied in a space with a lot more dimensions than 2.
+		\end{itemize}
 }
 
-TODO: 
-- get framerates for all data
-- get point numbers for splines
-- proof read each slide as typeset
-
-\frame{\frametitle{Pixel Difference (PD)}
+\frame{\frametitle{Pixel Difference (PD): Raw vs. Interpolated}
 	\begin{itemize}
-		\item PD is usually calculated on uninterpolated (probe-return) ultrasound 
-		data (a) as opposed to interpolated (human-readable) data (b).
+		\item PD is usually calculated on 
+		\begin{itemize}
+			\item (a) uninterpolated (probe-return) ultrasound data instead of
+			\item (b) interpolated (human-readable) data.
+		\end{itemize}
 	\end{itemize}
 	\centering
 	\includegraphics[height=.7\textheight]{figures/raw_and_interpolated.jpg}
 
-}
+	}
 
-\frame{\frametitle{Pixel Difference (PD)}
+\frame{\frametitle{Pixel Difference (PD): The maths}
+	\begin{equation*}
+	l2(t+0.5) = \sqrt{\sum_{i, j} (x(i,j,t+1) - x(i,j,t))^2}
+	\end{equation*}
+
+	\begin{itemize}
+		\item $i$ and $j$ are indices that span the width and height of the
+		image, $t$ is the time index.
+		\item Like said, this is actually just the Pythagorean theorem applied
+		in a space with a lot more dimensions than 2.
+	\end{itemize}
+
+	}
+
+\frame{\frametitle{Pixel Difference (PD): The maths visually}
 	\centering
 	\includegraphics[height=.8\textheight]{figures/pixel_difference_demo_noise_square_sum_tall.png}
 }
 
-\frame{\frametitle{Introduction: The how}
-	\begin{itemize}
-	\item de-interlaced video and the zigzag: time steps
-	\item splines and the sparseness of the data
-	\item PD on ultrasound and time resolution
-	\item Choosing a metric
-	\end{itemize}
+\frame{
+  \centering
+  {
+    \bf \Large 
+    \usebeamercolor[fg]{title}
+    PD and other metrics applied to articulatory data
+    
+    \vfill
+%    \includegraphics[height=1.5cm]{figures/aalto_logo} 
+  }
 }
-
 
 \frame{\frametitle{PD on de-interlaced videos}
 	% A slowed down and up-close example of interlacing by Wikipedia user Grayshi.
-	Lip video with camera attached to the ultrasound helmet. De-interlaced at 59.94 fps.
+	Lip video de-interlaced at 59.94 fps.
 	\centering
-	\includegraphics[width=0.7\linewidth]{figures/File127_pd_ult_and_vid_ts1_2.png}
-	
+	\includegraphics[width=0.7\linewidth]{figures/File127_pd_ult_and_vid_ts1_2.png}	
 }
 
 \frame{\frametitle{PD on de-interlaced videos}
 	% A slowed down and up-close example of interlacing by Wikipedia user Grayshi.
-	Taking a different time step:	
+
+	\begin{itemize}
+		\item The graphic below demonstrates taking a time step of 1 vs 3 on
+		ultrasound. 
+		\item I tried that for my PhD thesis
+		\citep{Palo-MeasuringPrespeechArticulation-2019}, but found that for
+		ultrasound a time step of 1 is preferable.
+		\item For de-interlaced videos the best time step is 2
+		\citep{Palo-ComputerAssistedSegmentation-2021}.		
+	\end{itemize}
+	\vspace*{.5cm}
 	\centering
 	\includegraphics[width=\linewidth]{figures/d1_and_d3.pdf}
 
 }
 
-\frame{\frametitle{Tongue splines and problems from sparseness}
+\frame{\frametitle{Tongue splines: Problems from spatial sparseness}
 
 	\textbf{Raw ultrasound:} 
 	\begin{itemize}
@@ -197,11 +245,10 @@ TODO:
 	\centering
 	\hspace*{-.75cm}
 	\includegraphics[width=1.125\linewidth]{P2_lemon_1st_frame_spline.pdf}
-	
-	
+
 }
 
-\frame{\frametitle{Tongue splines and problems from sparseness}
+\frame{\frametitle{Tongue splines: Problems from spatial sparseness}
 
 	\begin{itemize}
 		\item Longer time step and averaging improve the results.
@@ -215,7 +262,7 @@ TODO:
 	\includegraphics[width=.8\linewidth]{figures/File120_annd_pd}
 }
 
-\frame{\frametitle{Tongue splines and problems from sparseness}
+\frame{\frametitle{Tongue splines: Problems from spatial sparseness}
 
 	\begin{itemize}
 	\item Choice of metric can help, but not with everything.
@@ -229,7 +276,7 @@ TODO:
 \frame{\frametitle{3D/4D ultrasound}
 	
 	\begin{itemize}
-		\item Capturing a 3D frame takes a lot longer and we only have access to interpolated data.
+		\item Capturing a 3D frame takes a lot longer.
 		\item The images are always interpolated.
 		\item In analysis even on good (lucky) samples onset and gesture recognition becomes difficult.
 	\end{itemize}
@@ -264,21 +311,51 @@ TODO:
 	\end{equation*}
 }
 
-\frame{\frametitle{So how about MRI then?}
-	
+\frame{\frametitle{MRI: Challenges and how to deal with them}
 	\begin{itemize}
 		\item Frame rate can be a problem.
-		\item If there are systematic changes frame-to-frame caused by the imaging and reconstruction these may show up in PD analysis.
-		\item Best way to get ahead with using PD for analysis would be to get a small pilot sample and run the basic version on it: $l2$ or $l1$-norm, time step = 1, no smoothing.
+		\item If there are systematic changes frame-to-frame caused by the
+		imaging and reconstruction these may show up in PD analysis.
+		\item Best way to get ahead with using PD for analysis would be to get
+		a small pilot sample and run the basic version on it: $l2$ or
+		$l1$-norm, time step = 1, no smoothing.
 		\item Apply larger time steps and smoothing if needed.
-		\item Test different norms and/or look to different metrics all together.
+		\item Test different norms and/or look to different metrics all
+		together.
+	\end{itemize}
+}
+
+\frame{\frametitle{MRI: What makes it exciting?}
+	
+	\begin{itemize}
+		\item Triangulation is always good: One view is no view.
+		\item MRI can observe structures that are otherwise really difficult to
+		image.
+		\item Fast imaging sequences should be able to deal with the frame rate
+		issues.
+		\item Metrics like PD work well on data with fairly dense spatial
+		resolution.  
 	\end{itemize}
 	
+	
+}
+
+\frame{
+  \centering
+  {
+    \bf \Large 
+    \usebeamercolor[fg]{title}
+    Thank you! Do you have questions?
+    
+    \vfill
+%    \includegraphics[height=1.5cm]{figures/aalto_logo} 
+  }
 }
 
 
 \frame{\frametitle{References}
   
+\scriptsize
 \bibliographystyle{apalike}
 \bibliography{science_combined.bib}
 
@@ -296,6 +373,18 @@ TODO:
   }
 }
 
+\frame{\frametitle{Speech Articulation ToolKIT}
+	
+	\begin{itemize}
+		\item \url{https://github.com/giuthas/satkit}.
+		\item Written in Python and in active development.
+	\end{itemize}
+	
+	\begin{figure}
+		\centering
+		\includegraphics[width=.85\linewidth]{figures/SATKIT_UI.png}	
+	\end{figure}	
+}
 
 \frame{\frametitle{Delayed naming results: Acoustics}
 	\begin{center}
