@@ -117,6 +117,24 @@
 	\includegraphics[height=.5\textheight]{figures/pd_caught.jpg}
 }
 
+\frame{\frametitle{Background of PD}
+	\begin{itemize}
+		\item The analysis methods presented here are similar to methods
+		developed by
+		\begin{itemize}
+			\item \cite{McMillanCorley-CascadingInfluencesProduction-2010,DrakeEtAl-ARTICULATORYEVIDENCEINVOLVEMENT-2013} who used Euclidean
+			 distance on ultrasound frames and
+			\item \cite{RaeesyEtAl-ParametrisingDegreeArticulator-2011} who used a similar method on MRI
+			 data.
+		\end{itemize}
+	\end{itemize}
+}
+
+TODO: 
+- get framerates for all data
+- get point numbers for splines
+- proof read each slide as typeset
+
 \frame{\frametitle{Pixel Difference (PD)}
 	\begin{itemize}
 		\item PD is usually calculated on uninterpolated (probe-return) ultrasound 
@@ -162,14 +180,16 @@
 
 	\textbf{Raw ultrasound:} 
 	\begin{itemize}
-		\item Typically 63x406 pixels per frame.
+		\item Typically on the order of 10k pixels per frame, today 63x412
+		pixels per frame.
 		\item Individual pixel's fluctuations get averaged out.
 	\end{itemize}
 
 	\vspace{.25cm}
 	\textbf{Tongue splines:}
 	\begin{itemize}
-		\item Typically control points per frame.
+		\item Typically on the order of 30-50 control points per frame, today
+		42 control points per frame.
 		\item Individual point's fluctuations may end up driving the data.
 	\end{itemize}
 	
@@ -184,9 +204,11 @@
 \frame{\frametitle{Tongue splines and problems from sparseness}
 
 	\begin{itemize}
-		\item Longer time step and averaging produce better results, but still with limits.
-		\item Here and in the next slide ANND and MPBPD have been calculated with time step 3 and smoothed with a moving average filter with a 5
-		frame window.
+		\item Longer time step and averaging improve the results.
+		\item Here and in the next slide ANND
+		\citep{ZharkovaHewlett-MeasuringLingualCoarticulation-2009} and MPBPD
+		\citep{Palo-CanWeDetect-2020} have been calculated with time step 3 and
+		smoothed with a moving average filter with a 5 frame window.
 	\end{itemize}
 
 	\centering
@@ -253,6 +275,7 @@
 	\end{itemize}
 	
 }
+
 
 \frame{\frametitle{References}
   
