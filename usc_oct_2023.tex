@@ -2,6 +2,7 @@
 ]{beamer}
 \definecolor{MyGreen}{RGB}{50, 120, 50}
 \usecolortheme[named=MyGreen]{structure}
+\usefonttheme{serif}
 
 \usepackage{babel}
 \usepackage[utf8]{inputenc}
@@ -18,6 +19,8 @@
 \usepackage{tipa}
 
 \usepackage{hyperref}
+
+\usepackage{graphicx}
 
 \setbeamertemplate{navigation symbols}{}
 
@@ -63,25 +66,191 @@
   \item In my thesis I concentrated on timing of utterance onset in both
   acoustics and articulation \citep{Palo-MeasuringPrespeechArticulation-2019}.
   \item The data was high-speed tongue ultrasound from a delayed naming
-  experiment -- specifically one using the Rastle instructions, see
-  \cite{RastleEtAl-CharacterizingMotorExecution-2005}.
+  experiment -- specifically one using the Rastle instructions
+  \citep{RastleEtAl-CharacterizingMotorExecution-2005}.
+  \item 2D ultrasound has good time resolution: 80-120 fps in today's examples.
   \end{itemize} 
 
-  % TODO: add a picture of ultrasound here and Rastle timeline
-  % \includegraphics[options]{name}
+ 	\centering
+	\includegraphics[width=\textwidth]{figures/stages_of_naming.jpg}
 }
 
 
 \frame{\frametitle{Introduction: The why}
   \begin{itemize}
-  \item When trying to identify movement onset in grayscale videos with a lot of
+  \item When trying to identify movement onset in greyscale videos with a lot of
   speckle 'noise', it doesn't take long to grow a desire for an easier way.
-  \item \kommentti{explain speckle noise and tongue ultrasound}
-  \item The first tool out of the box happened to work adequately --  and so for my
-  thesis I used Euclidean distance to identify articulatory
-  \end{itemize}
+  \item The speckle 'noise' maybe caused by a number of factors including bubbles in the 
+  acoustic gel between the chin and the probe, and more interestingly changes in internal 
+  structures of tissues -- such as muscle fibres tensing and relaxing.
+  \end{itemize} 
+  
+  
 }
 
+\frame{\frametitle{What is being imaged by tongue ultrasound?}
+	\centering
+	\includegraphics[width=0.45\linewidth]{figures/DA_and_P1_overlay_2}
+	\includegraphics[width=0.45\linewidth]{figures/DA_and_P1_overlay_3}
+}
+
+\frame{\frametitle{Where is the tongue?}
+
+	\centering
+	\hspace*{-.75cm}
+	\includegraphics[width=1.125\linewidth]{P2_lemon_1st_frame_spline.pdf}
+}
+
+
+
+\frame{\frametitle{Pixel Difference (PD)}
+	\begin{itemize}
+	\item The first tool out of the box happened to work adequately --  and so for my
+	thesis I used Euclidean distance or $l2$-norm to identify articulatory onsets:
+	\end{itemize}
+	\begin{equation*}
+		l2(t+0.5) = \sqrt{\sum_{i, j} (x(i,j,t+1) - x(i,j,t))²}
+	\end{equation*}
+
+
+	\centering
+	\includegraphics[height=.5\textheight]{figures/pd_caught.jpg}
+}
+
+\frame{\frametitle{Pixel Difference (PD)}
+	\begin{itemize}
+		\item PD is usually calculated on uninterpolated (probe-return) ultrasound 
+		data (a) as opposed to interpolated (human-readable) data (b).
+	\end{itemize}
+	\centering
+	\includegraphics[height=.7\textheight]{figures/raw_and_interpolated.jpg}
+
+}
+
+\frame{\frametitle{Pixel Difference (PD)}
+	\centering
+	\includegraphics[height=.8\textheight]{figures/pixel_difference_demo_noise_square_sum_tall.png}
+}
+
+\frame{\frametitle{Introduction: The how}
+	\begin{itemize}
+	\item de-interlaced video and the zigzag: time steps
+	\item splines and the sparseness of the data
+	\item PD on ultrasound and time resolution
+	\item Choosing a metric
+	\end{itemize}
+}
+
+
+\frame{\frametitle{PD on de-interlaced videos}
+	% A slowed down and up-close example of interlacing by Wikipedia user Grayshi.
+	Lip video with camera attached to the ultrasound helmet. De-interlaced at 59.94 fps.
+	\centering
+	\includegraphics[width=0.7\linewidth]{figures/File127_pd_ult_and_vid_ts1_2.png}
+	
+}
+
+\frame{\frametitle{PD on de-interlaced videos}
+	% A slowed down and up-close example of interlacing by Wikipedia user Grayshi.
+	Taking a different time step:	
+	\centering
+	\includegraphics[width=\linewidth]{figures/d1_and_d3.pdf}
+
+}
+
+\frame{\frametitle{Tongue splines and problems from sparseness}
+
+	\textbf{Raw ultrasound:} 
+	\begin{itemize}
+		\item Typically 63x406 pixels per frame.
+		\item Individual pixel's fluctuations get averaged out.
+	\end{itemize}
+
+	\vspace{.25cm}
+	\textbf{Tongue splines:}
+	\begin{itemize}
+		\item Typically control points per frame.
+		\item Individual point's fluctuations may end up driving the data.
+	\end{itemize}
+	
+	\vspace{.25cm}
+	\centering
+	\hspace*{-.75cm}
+	\includegraphics[width=1.125\linewidth]{P2_lemon_1st_frame_spline.pdf}
+	
+	
+}
+
+\frame{\frametitle{Tongue splines and problems from sparseness}
+
+	\begin{itemize}
+		\item Longer time step and averaging produce better results, but still with limits.
+		\item Here and in the next slide ANND and MPBPD have been calculated with time step 3 and smoothed with a moving average filter with a 5
+		frame window.
+	\end{itemize}
+
+	\centering
+	\includegraphics[width=.8\linewidth]{figures/File120_annd_pd}
+}
+
+\frame{\frametitle{Tongue splines and problems from sparseness}
+
+	\begin{itemize}
+	\item Choice of metric can help, but not with everything.
+	\end{itemize}
+
+	\centering
+	\includegraphics[width=\linewidth]{figures/File120_annd_mpbpd_pd}
+	
+}
+
+\frame{\frametitle{3D/4D ultrasound}
+	
+	\begin{itemize}
+		\item Capturing a 3D frame takes a lot longer and we only have access to interpolated data.
+		\item The images are always interpolated.
+		\item In analysis even on good (lucky) samples onset and gesture recognition becomes difficult.
+	\end{itemize}
+	
+	\begin{figure}
+	\centering
+	\includegraphics[width=.9\linewidth]{figures/PD_on_3D_cropped.png}	
+	\end{figure}
+	
+}
+
+\frame{\frametitle{PD on Raw vs Interpolated 2D data}
+	
+	\centering
+	\includegraphics[width=.8\linewidth]{figures/raw_interpolated_2D}
+}
+
+\frame{\frametitle{PD on data with artificially lowered frame rate}
+	\centering
+	\includegraphics[width=.8\linewidth]{figures/raw_interpolated_2D_step5}
+	
+}
+
+\frame{\frametitle{In the works: Choosing the metric for PD}
+	\begin{itemize}
+		\item PD has so far usually been calculated as the Euclidean distance or $l2$-norm.
+		\item We've recently been looking at principled ways of selecting the norm for a given data source -- such as 2D ultrasound -- from the different $lp$-norms where $p \in \mathopen]0,\inf\mathclose[$. 
+		\item It looks like the optimal norm for 2D ultrasound is $l1$ (or close to it):
+	\end{itemize}	
+	\begin{equation*}
+		l1(t+0.5) = \sum_{i, j} |x(i,j,t+1) - x(i,j,t)|
+	\end{equation*}
+}
+
+\frame{\frametitle{So how about MRI then?}
+	
+	\begin{itemize}
+		\item Frame rate can be a problem.
+		\item If there are systematic changes frame-to-frame caused by the imaging and reconstruction these may show up in PD analysis.
+		\item Testing different norms, and applying larger time steps and smoothing if needed will hopefully lead to analysable data.
+	\end{itemize}
+	
+}
 
 \frame{\frametitle{References}
   
@@ -95,13 +264,55 @@
   {
     \bf \Large 
     \usebeamercolor[fg]{title}
-    Something else i.e. section title
+    Extra material
     
     \vfill
 %    \includegraphics[height=1.5cm]{figures/aalto_logo} 
   }
 }
 
+
+\frame{\frametitle{Delayed naming results: Acoustics}
+	\begin{center}
+		\vspace*{-.5cm}
+		\hspace*{-1cm}
+		\includegraphics[width=\textwidth]{figures/OD_vs_AcRT.jpg}
+	\end{center}
+	Medianised within participant, over several repetitions and over
+	the vowels \textipa{/a,i,O/}. Over all analysable n = 1386: 439 from P1, 672 from P3, and
+	275 from P4.  }
+
+\frame{\frametitle{Delayed naming results: Articulatory to Acoustic Interval}
+	\begin{center}
+		\vspace*{-.5cm}
+		\hspace*{-1cm}
+		\includegraphics[width=\textwidth]{figures/OD_vs_AAI.jpg}
+	\end{center}
+	Medianised within participant, over several repetitions and over
+	the vowels \textipa{/a,i,O/}. Over all analysable n = 1386: 439 from P1, 672 from P3,
+	and 275 from P4.
+}
+
+\frame{\frametitle{Theory: Effect of OD on AAI}
+	\begin{itemize}
+		\item As the Onset Duration (OD) gets longer, Articulatory to Acoustic Interval (AAI) shortens.
+		\item First three lines represent individual utterances, final line is a conceptual model of the effect of continuously lengthening OD.6
+	\end{itemize}
+	\begin{center}
+		\hspace*{-.5cm}
+		\includegraphics[width=1.1\textwidth]{effect_of_OD.drawio.png}
+	\end{center}
+}
+
+\frame{\frametitle{Theory: Effect of articulatory rate on AAI}
+	\begin{itemize}
+		\item If we keep the utterance content constant but vary articulation rate, all parts (AAI, OD, and acoustic word) get longer as articulation rate goes down.
+	\end{itemize}
+	\begin{center}
+		\hspace*{-.5cm}
+		\includegraphics[width=\textwidth]{effect_of_RhymeDur.drawio.png}
+	\end{center}
+}
 
 \end{document}
 
