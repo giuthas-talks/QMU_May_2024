@@ -247,7 +247,9 @@
 	\begin{itemize}
 		\item Frame rate can be a problem.
 		\item If there are systematic changes frame-to-frame caused by the imaging and reconstruction these may show up in PD analysis.
-		\item Testing different norms, and applying larger time steps and smoothing if needed will hopefully lead to analysable data.
+		\item Best way to get ahead with using PD for analysis would be to get a small pilot sample and run the basic version on it: $l2$ or $l1$-norm, time step = 1, no smoothing.
+		\item Apply larger time steps and smoothing if needed.
+		\item Test different norms and/or look to different metrics all together.
 	\end{itemize}
 	
 }
