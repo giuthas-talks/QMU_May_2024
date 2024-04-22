@@ -1,3 +1,3 @@
-# Analysing Image Sequences and Other Articulatory Data Using Vector Norms and Related Methods
+# PD (and other things) since PhD -- Work on speech timing and methodology
 
-Presentation at USC in October 2023.
+Presentation at QMU in May 2024.
