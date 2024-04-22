@@ -1,3 +1,10 @@
 PD (and other things) since PhD -- Work on speech timing and methodology
 
-This talk will focus on mainly an analysing tongue ultrasound, but will discuss other types of data too. I will describe my work on Pixel Difference, or using vector norms to analyse overall change in ultrasound (and other) video sequences. I first employed Pixel Difference to identify articulatory onsets in ultrasound recordings of a delayed naming experiment. I will then discuss what we can and cannot currently do with these methods in time domain analysis of articulatory data, focusing on what we have learned from combining analysis of raw ultrasound with examining tongue splines and applying Pixel Difference to lip videos. I will also highlight a new focus of mine, 3D/4D ultrasound, and why frame rate issues are not so easy to solve. Finally, I will discuss why MRI would be very interesting to analyse with these methods -- or adapted versions of them -- and which challenges one might come across. 
+This talk will focus on speech timing and the related methodological work I
+have done since graduating in 2019. At the center of this is Pixel Difference
+which is a method for evaluating overall change in ultrasound (and other image
+sequence) data. I first employed Pixel Difference to identify articulatory
+onsets in ultrasound recordings of a delayed naming experiment. In this talk, I
+will introduce timing results and describe my work on Pixel Difference -- in
+effect using vector norms to analyse overall change in ultrasound (and other)
+video sequences.
