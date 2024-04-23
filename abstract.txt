@@ -1,10 +1,11 @@
 PD (and other things) since PhD -- Work on speech timing and methodology
 
 This talk will focus on speech timing and the related methodological work I
-have done since graduating in 2019. At the center of this is Pixel Difference
+have done since graduating in 2019. At the center will be Pixel Difference (PD)
 which is a method for evaluating overall change in ultrasound (and other image
-sequence) data. I first employed Pixel Difference to identify articulatory
-onsets in ultrasound recordings of a delayed naming experiment. In this talk, I
-will introduce timing results and describe my work on Pixel Difference -- in
-effect using vector norms to analyse overall change in ultrasound (and other)
-video sequences.
+sequence) data. I first employed PD to identify articulatory onsets in
+ultrasound recordings of a delayed naming experiment. I have since done more
+work on speech initiation, and expanded the analysis to the rest of the
+utterance. However, I have mainly concentrated on methodological issues that
+have risen from trying to use PD on 3D/4D ultrasound and from trying to
+validate PD against spline-based metrics.
